@@ -27,7 +27,7 @@ public class Connection {
     private static JSONArray lang;
     private static Iterator itr;
 
-    private static String reply, parameter;
+    private static String reply, parameter = "";
 
     public static HttpURLConnection getConnection(String parameter) {
         try {
@@ -46,9 +46,9 @@ public class Connection {
     }
 
     public static boolean testConnection() {
+        boolean hasil = false;
         try {
             parser = new JSONParser();
-            parameter = "/get/";
             connection = getConnection(parameter);
             is = connection.getInputStream();
             theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -59,7 +59,9 @@ public class Connection {
                 if (jsonObject.get("sukses").equals("0")) {
                     reply = jsonObject.get("data").toString();
                     DialogHelper.showWarningMessage(reply);
-                    return false;
+                    hasil = false;
+                } else {
+                    hasil = true;
                 }
             }
             connection.disconnect();
@@ -67,7 +69,7 @@ public class Connection {
             System.out.println(e);
 //            e.printStackTrace();
         }
-        return true;
+        return hasil;
     }
 
 }

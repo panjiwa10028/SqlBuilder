@@ -6,7 +6,9 @@ import com.RestApi.DaoPhoenix;
 import com.RestApi.ImplementMysql;
 import com.RestApi.ImplementPhoenix;
 import com.Utility.DialogHelper;
-import com.View.IFrameMenu;
+import com.View.IFrame;
+import com.View.PanelDesign;
+import java.awt.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,7 +31,8 @@ public class ConnectionController {
 
     //from class
     private static Database model;
-    private final IFrameMenu frame;
+    private final IFrame frame;
+    private PanelDesign panelDesign;
 
     //from class java
     private DefaultTableModel modelTable;
@@ -68,7 +71,8 @@ public class ConnectionController {
 
     public ConnectionController() {
         model = new Database();
-        frame = new IFrameMenu();
+        frame = new IFrame();
+        panelDesign = new PanelDesign();
 
         list = new ArrayList();
         table = new ArrayList();
@@ -80,9 +84,10 @@ public class ConnectionController {
         implPhoenix = new DaoPhoenix();
     }
 
-    public ConnectionController(IFrameMenu frameMenu) {
+    public ConnectionController(IFrame frameMenu) {
         model = new Database();
         frame = frameMenu;
+        panelDesign = new PanelDesign();
         modelTable = new DefaultTableModel();
 
         col = new ArrayList();
@@ -124,10 +129,23 @@ public class ConnectionController {
             frame.dispose();
         }
     }
+    
+    public void addPanelDesign(){
+        panelDesign = new PanelDesign();
+        frame.gettPanelQuery().addTab("Design", panelDesign);
+    }
 
     public void btnChangeAction() {
         model.setLimit(DialogHelper.showInputMessage("Input limit !"));
         frame.getTxtLimit().setText(model.getLimit());
+    }
+    
+    public void refreshAction(){
+        treeModel = new DefaultTreeModel(null);
+        frame.getjTreeDatabase().setModel(treeModel);
+        modelTable = new DefaultTableModel();
+        frame.gettTableData().setModel(modelTable);
+        pop_tree(model.getDbNama());
     }
 
     public void jTreeClick(javax.swing.event.TreeSelectionEvent evt) {
@@ -168,7 +186,7 @@ public class ConnectionController {
 
     // insert root jTree
     @SuppressWarnings({"empty-statement", "empty-statement"})
-    public void pop_tree(String dbName) {
+    private void pop_tree(String dbName) {
         System.out.println(dbName);
         list.add(dbName);
         hierarchy = list.toArray();
@@ -217,8 +235,8 @@ public class ConnectionController {
         }
     }
     
-    public void reset(){
-//        newConnectionAction();
+    public IFrame removeFrame(){
+        return frame;
     }
 
 }

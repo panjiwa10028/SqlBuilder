@@ -2,7 +2,7 @@ package com.RestApi;
 
 import com.Model.Database;
 import com.Utility.Connection;
-import com.View.MainFrame;
+import com.View.Main;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class DaoMysql implements ImplementMysql {
     private static InputStream is;
 
     private static Database model;
-    private static MainFrame frame;
+    private static Main frame;
     private DefaultTableModel modelTable;
 
     private final JSONParser parser;
