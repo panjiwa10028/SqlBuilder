@@ -4,9 +4,8 @@ import com.Model.Database;
 import com.Utility.Connection;
 import com.Utility.DialogHelper;
 import com.Utility.Validasi;
-import com.View.IFrame;
+import com.View.IFrameMenu;
 import com.View.Main;
-import com.View.MainFrame;
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
@@ -15,25 +14,25 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class MainController {
 
-    private final MainFrame frame;
+    private final Main frame;
     private final Database model;
     private final Validasi validasi;
-    private final IFrame menuUtama;
+    private final IFrameMenu menuUtama;
     private final ConnectionController connectController;
 
-    public MainController(MainFrame frameUtama) {
+    public MainController(Main frameUtama) {
         frame = frameUtama;
         model = new Database();
         validasi = new Validasi();
-        menuUtama = new IFrame();
+        menuUtama = new IFrameMenu();
         connectController = new ConnectionController();
     }
 
     public MainController() {
-        frame = new MainFrame();
+        frame = new Main();
         model = new Database();
         validasi = new Validasi();
-        menuUtama = new IFrame();
+        menuUtama = new IFrameMenu();
         connectController = new ConnectionController();
     }
 

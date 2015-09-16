@@ -6,9 +6,7 @@ import com.RestApi.DaoPhoenix;
 import com.RestApi.ImplementMysql;
 import com.RestApi.ImplementPhoenix;
 import com.Utility.DialogHelper;
-import com.View.IFrame;
-import com.View.PanelDesign;
-import java.awt.Component;
+import com.View.IFrameMenu;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -31,8 +29,7 @@ public class ConnectionController {
 
     //from class
     private static Database model;
-    private final IFrame frame;
-    private PanelDesign panelDesign;
+    private final IFrameMenu frame;
 
     //from class java
     private DefaultTableModel modelTable;
@@ -71,8 +68,7 @@ public class ConnectionController {
 
     public ConnectionController() {
         model = new Database();
-        frame = new IFrame();
-        panelDesign = new PanelDesign();
+        frame = new IFrameMenu();
 
         list = new ArrayList();
         table = new ArrayList();
@@ -84,10 +80,9 @@ public class ConnectionController {
         implPhoenix = new DaoPhoenix();
     }
 
-    public ConnectionController(IFrame frameMenu) {
+    public ConnectionController(IFrameMenu frameMenu) {
         model = new Database();
         frame = frameMenu;
-        panelDesign = new PanelDesign();
         modelTable = new DefaultTableModel();
 
         col = new ArrayList();
@@ -128,11 +123,6 @@ public class ConnectionController {
         if (confirm == 0) {
             frame.dispose();
         }
-    }
-    
-    public void addPanelDesign(){
-        panelDesign = new PanelDesign();
-        frame.gettPanelQuery().addTab("Design", panelDesign);
     }
 
     public void btnChangeAction() {
@@ -235,7 +225,7 @@ public class ConnectionController {
         }
     }
     
-    public IFrame removeFrame(){
+    public IFrameMenu removeFrame(){
         return frame;
     }
 
