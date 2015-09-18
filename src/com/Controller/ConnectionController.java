@@ -9,6 +9,7 @@ import com.Utility.DialogHelper;
 import com.View.IFrameMenu;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -98,7 +99,7 @@ public class ConnectionController {
 
     public void setEnableFrame(String dbSelect, String dbName, String ip, String port) {
         model.setDbSelect(dbSelect);
-        if(model.getDbSelect().toLowerCase().equals("mysql")){
+        if (model.getDbSelect().toLowerCase().equals("mysql")) {
             model.setDbNama(dbName);
         } else {
             model.setDbNama(model.getDbSelect());
@@ -117,7 +118,7 @@ public class ConnectionController {
             frame.dispose();
         }
     }
-    
+
     public void newConnectionAction() {
         int confirm = DialogHelper.showConfirmMessage("Are you sure ?");
         if (confirm == 0) {
@@ -129,8 +130,8 @@ public class ConnectionController {
         model.setLimit(DialogHelper.showInputMessage("Input limit !"));
         frame.getTxtLimit().setText(model.getLimit());
     }
-    
-    public void refreshAction(){
+
+    public void refreshAction() {
         treeModel = new DefaultTreeModel(null);
         frame.getjTreeDatabase().setModel(treeModel);
         modelTable = new DefaultTableModel();
@@ -194,7 +195,7 @@ public class ConnectionController {
                 break;
             case "phoenix":
                 table = implPhoenix.getTabel();
-                break;   
+                break;
         }
         for (int j = 0; j < (int) table.size(); j++) {
             child = new DefaultMutableTreeNode(table.get(j));
@@ -210,7 +211,7 @@ public class ConnectionController {
                 break;
             case "phoenix":
                 frame.gettTableData().setModel(implPhoenix.getColumn(parameter));
-                break;   
+                break;
         }
     }
 
@@ -221,12 +222,21 @@ public class ConnectionController {
                 break;
             case "phoenix":
                 frame.gettTableData().setModel(implPhoenix.getData(param, limit));
-                break;   
+                break;
         }
     }
-    
-    public IFrameMenu removeFrame(){
+
+    public IFrameMenu removeFrame() {
         return frame;
+    }
+
+    private void existTable() {
+        reply = "/temp/log_table.json";
+        try {
+            parameter = new FileReader(reply);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -1,9 +1,11 @@
-package com.RestApi;
+package com.LoadJson;
 
+import com.RestApi.*;
 import com.Model.Database;
 import com.Utility.Connection;
 import com.View.MainFrame;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -19,7 +21,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class DaoPhoenix implements ImplementPhoenix {
+public class LoadPhoenix implements ImplementPhoenix {
 
     private static URL url;
     private static HttpURLConnection connection;
@@ -44,7 +46,7 @@ public class DaoPhoenix implements ImplementPhoenix {
     private String reply, parameter;
     private int value;
 
-    public DaoPhoenix() {
+    public LoadPhoenix() {
         model = new Database();
         list = new ArrayList();
         table = new ArrayList();
@@ -54,21 +56,15 @@ public class DaoPhoenix implements ImplementPhoenix {
     }
 
     @Override
-    public List<String> getTabel() {
+    public List<String> getTabel(String param) {
         try {
-            parameter = "/get/";
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
-                System.out.println(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
+//              System.out.println(reply);
                 jsonObject = (JSONObject) obj;
                 if (jsonObject.get("sukses").equals("1")) {
                     lang = (JSONArray) jsonObject.get("data");
-//                for (Object lang1 : lang) {
-//                    table.add(lang1.toString());
-//                }
                     itr = lang.iterator();
                     table.clear();
                     while (itr.hasNext()) {
@@ -77,8 +73,6 @@ public class DaoPhoenix implements ImplementPhoenix {
                     }
                 }
             }
-            connection.disconnect();
-
         } catch (IOException | ParseException e) {
             System.out.println(e);
 //            e.printStackTrace();
@@ -89,12 +83,9 @@ public class DaoPhoenix implements ImplementPhoenix {
     @Override
     public DefaultTableModel getColumn(String param) {
         try {
-            parameter = "/get/" + param;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
 //                System.out.println(reply);
                 jsonObject = (JSONObject) obj;
                 if (jsonObject.get("sukses").equals("1")) {
@@ -112,7 +103,6 @@ public class DaoPhoenix implements ImplementPhoenix {
                     }
                 }
             }
-            connection.disconnect();
         } catch (IOException | ParseException e) {
             System.out.println(e);
 //            e.printStackTrace();
@@ -121,15 +111,12 @@ public class DaoPhoenix implements ImplementPhoenix {
     }
 
     @Override
-    public DefaultTableModel getData(String param, int limit) {
+    public DefaultTableModel getData(String param) {
         try {
             int j = 1;
-            parameter = "/get/" + param + "/" + limit;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
                 column.remove(0);
 //                System.out.println(reply);
                 jsonObject = (JSONObject) obj;
@@ -154,7 +141,6 @@ public class DaoPhoenix implements ImplementPhoenix {
                 }
 
             }
-            connection.disconnect();
 //             output
 //             {"Query":"Find Success","data":[{"id":1,"nama":"bani","email":"bani@pusing.com"},{"id":2,"nama":"hardika","email":"hardika@pusing.com"}]}
         } catch (IOException | ParseException e) {

@@ -1,0 +1,38 @@
+{
+  "sukses": "1",
+  "data": [
+    {
+      "Tables_in_ta_penggajian": "admin"
+    },
+    {
+      "Tables_in_ta_penggajian": "apikey"
+    },
+    {
+      "Tables_in_ta_penggajian": "cekdep"
+    },
+    {
+      "Tables_in_ta_penggajian": "cekkary"
+    },
+    {
+      "Tables_in_ta_penggajian": "cekpot"
+    },
+    {
+      "Tables_in_ta_penggajian": "departement"
+    },
+    {
+      "Tables_in_ta_penggajian": "gaji"
+    },
+    {
+      "Tables_in_ta_penggajian": "karyawan"
+    },
+    {
+      "Tables_in_ta_penggajian": "potongan"
+    },
+    {
+      "Tables_in_ta_penggajian": "potongankaryawan"
+    },
+    {
+      "Tables_in_ta_penggajian": "presensi"
+    }
+  ]
+}

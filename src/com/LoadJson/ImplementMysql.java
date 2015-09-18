@@ -1,5 +1,6 @@
-package com.RestApi;
+package com.LoadJson;
 
+import com.RestApi.*;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,8 +12,8 @@ public interface ImplementMysql {
     
     public DefaultTableModel getColumnSql(String param);
     
-    public DefaultTableModel getData(String param, int limit);
+    public DefaultTableModel getData(String param);
     
-    public DefaultTableModel getDataSql(String param, int limit);
+    public DefaultTableModel getDataSql(String param);
     
 }

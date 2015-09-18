@@ -5,7 +5,7 @@ import com.Utility.Connection;
 import com.Utility.DialogHelper;
 import com.Utility.Validasi;
 import com.View.IFrameMenu;
-import com.View.Main;
+import com.View.MainFrame;
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
@@ -14,13 +14,13 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class MainController {
 
-    private final Main frame;
+    private final MainFrame frame;
     private final Database model;
     private final Validasi validasi;
     private final IFrameMenu menuUtama;
     private final ConnectionController connectController;
 
-    public MainController(Main frameUtama) {
+    public MainController(MainFrame frameUtama) {
         frame = frameUtama;
         model = new Database();
         validasi = new Validasi();
@@ -29,7 +29,7 @@ public class MainController {
     }
 
     public MainController() {
-        frame = new Main();
+        frame = new MainFrame();
         model = new Database();
         validasi = new Validasi();
         menuUtama = new IFrameMenu();
@@ -46,7 +46,7 @@ public class MainController {
                     frame.setVisible(true);
                     setOnline(false);
                     frame.setLocationRelativeTo(null);
-                    frame.setExtendedState(Main.MAXIMIZED_BOTH);
+                    frame.setExtendedState(MainFrame.MAXIMIZED_BOTH);
                     frame.getMainMenu().updateUI();
                     setTextField(false);
                 }

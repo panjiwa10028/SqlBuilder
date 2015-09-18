@@ -1,9 +1,11 @@
-package com.RestApi;
+package com.LoadJson;
 
+import com.RestApi.*;
 import com.Model.Database;
 import com.Utility.Connection;
 import com.View.MainFrame;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -19,11 +21,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class DaoMysql implements ImplementMysql {
-
-    private static URL url;
-    private static HttpURLConnection connection;
-    private static InputStream is;
+public class LoadMysql implements ImplementMysql {
 
     private static Database model;
     private static MainFrame frame;
@@ -44,7 +42,7 @@ public class DaoMysql implements ImplementMysql {
     private String reply, parameter;
     private int value;
 
-    public DaoMysql() {
+    public LoadMysql() {
         model = new Database();
         list = new ArrayList();
         table = new ArrayList();
@@ -56,13 +54,10 @@ public class DaoMysql implements ImplementMysql {
     @Override
     public List<String> getTabel(String param) {
         try {
-            parameter = "/get/";
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
-//                System.out.println(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
+                //                System.out.println(reply);
                 jsonObject = (JSONObject) obj;
                 if (jsonObject.get("sukses").equals("1")) {
                     lang = (JSONArray) jsonObject.get("data");
@@ -74,7 +69,6 @@ public class DaoMysql implements ImplementMysql {
                     }
                 }
             }
-            connection.disconnect();
         } catch (IOException | ParseException e) {
             System.out.println(e);
 //            e.printStackTrace();
@@ -85,12 +79,9 @@ public class DaoMysql implements ImplementMysql {
     @Override
     public DefaultTableModel getColumn(String param) {
         try {
-            parameter = "/get/" + param;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
 //                System.out.println(reply);
                 jsonObject = (JSONObject) obj;
                 if (jsonObject.get("sukses").equals("1")) {
@@ -108,7 +99,6 @@ public class DaoMysql implements ImplementMysql {
                     }
                 }
             }
-            connection.disconnect();
         } catch (IOException | ParseException e) {
             System.out.println(e);
 //            e.printStackTrace();
@@ -117,15 +107,12 @@ public class DaoMysql implements ImplementMysql {
     }
 
     @Override
-    public DefaultTableModel getData(String param, int limit) {
+    public DefaultTableModel getData(String param) {
         try {
             int j = 1;
-            parameter = "/get/" + param + "/" + limit;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
                 column.remove(0);
                 System.out.println(reply);
                 jsonObject = (JSONObject) obj;
@@ -149,7 +136,6 @@ public class DaoMysql implements ImplementMysql {
                     }
                 }
             }
-            connection.disconnect();
 //             output
 //             {"Query":"Find Success","data":[{"id":1,"nama":"bani","email":"bani@pusing.com"},{"id":2,"nama":"hardika","email":"hardika@pusing.com"}]}
         } catch (IOException | ParseException e) {
@@ -158,16 +144,13 @@ public class DaoMysql implements ImplementMysql {
         }
         return modelTable;
     }
-    
+
     @Override
     public DefaultTableModel getColumnSql(String param) {
         try {
-            parameter = "/get/" + param;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
 //                System.out.println(reply);
                 jsonObject = (JSONObject) obj;
                 if (jsonObject.get("sukses").equals("1")) {
@@ -185,7 +168,6 @@ public class DaoMysql implements ImplementMysql {
                     }
                 }
             }
-            connection.disconnect();
         } catch (IOException | ParseException e) {
             System.out.println(e);
 //            e.printStackTrace();
@@ -194,15 +176,12 @@ public class DaoMysql implements ImplementMysql {
     }
 
     @Override
-    public DefaultTableModel getDataSql(String param, int limit) {
+    public DefaultTableModel getDataSql(String param) {
         try {
             int j = 1;
-            parameter = "/get/" + param + "/" + limit;
-            connection = Connection.getConnection(parameter);
-            is = connection.getInputStream();
-            theReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            while ((reply = theReader.readLine()) != null) {
-                obj = parser.parse(reply);
+            parameter = param;
+            obj = parser.parse(new FileReader(parameter));
+            while (obj != null) {
                 column.remove(0);
                 System.out.println(reply);
                 jsonObject = (JSONObject) obj;
@@ -226,7 +205,6 @@ public class DaoMysql implements ImplementMysql {
                     }
                 }
             }
-            connection.disconnect();
 //             output
 //             {"Query":"Find Success","data":[{"id":1,"nama":"bani","email":"bani@pusing.com"},{"id":2,"nama":"hardika","email":"hardika@pusing.com"}]}
         } catch (IOException | ParseException e) {
